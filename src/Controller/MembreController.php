@@ -40,7 +40,7 @@ class MembreController extends AbstractController
            
                 if ($membre!=null) {
                     $session->set('user', $membre);
-                    return $this->redirectToRoute('app_membre_index', [], Response::HTTP_SEE_OTHER);
+                    return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
                 } 
                 else {
                     $this->addFlash('error', 'Invalid credentials');
@@ -66,6 +66,31 @@ class MembreController extends AbstractController
                     $membre->setRole("membre");
                     $membreRepository->save($membre, true);
                     return $this->redirectToRoute('app_membre_index', [], Response::HTTP_SEE_OTHER);
+                } 
+                else {
+                    $this->addFlash('error', 'Invalid credentials');
+                }
+        }
+        return $this->render('membre/signup.html.twig', [
+            'form' => $form->createView()
+        ]); 
+    }
+    #[Route('/signuppar', name: 'app_membre_signuppar')]
+    public function signuppar(Request $request, MembreRepository $membreRepository): Response
+    {   $membre = new Membre();
+        $form = $this->createForm(MembreType::class,$membre);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $email = $form->get('email')->getData();
+            
+           
+                if ($membreRepository->findOneBy(['email' => $email])==null) {
+                    $membre->setRole("partenaire");
+                    $membreRepository->save($membre, true);
+                    return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
                 } 
                 else {
                     $this->addFlash('error', 'Invalid credentials');

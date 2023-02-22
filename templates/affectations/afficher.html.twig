@@ -1,18 +1,16 @@
-{% extends 'base1.html.twig' %}
-
-{% block title %}Affectations index{% endblock %}
-
+{% extends 'base.html.twig' %}
 {% block body %}
-    <h1>Affectations index</h1>
+<div class="container">
+    
 
-    <table class="table">
+<table class="table" border="2">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Date_debut</th>
                 <th>Date_fin</th>
                 <th>technicien</th>
-                <th>actions</th>
+                <th>terrain</th>
             </tr>
         </thead>
         <tbody>
@@ -23,10 +21,7 @@
                 <td>{{ affectation.dateDebut ? affectation.dateDebut|date('Y-m-d') : '' }}</td>
                 <td>{{ affectation.dateFin ? affectation.dateFin|date('Y-m-d') : '' }}</td>
                 <td>{{ affectation.technicien }}</td>
-                <td>
-                    <a href="{{ path('app_affectations_show', {'id': affectation.id}) }}">show</a>
-                    <a href="{{ path('app_affectations_edit', {'id': affectation.id}) }}">edit</a>
-                </td>
+                <td>{{ affectation.terrain }}</td>
             </tr>
         {% else %}
             <tr>
@@ -35,6 +30,5 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_affectations_new') }}">Create new</a>
-{% endblock %}
+    </div>
+    {% endblock %}

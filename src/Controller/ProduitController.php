@@ -15,11 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProduitController extends AbstractController
 {
     #[Route('/', name: 'app_produit_index', methods: ['GET'])]
-    public function index(ProduitRepository $produitRepository,CategorieRepository $categorieRepository): Response
-    {
+    public function index(ProduitRepository $produitRepository,CategorieRepository $categorieRepository,Request $request): Response
+    {   $session= $request->getSession();
+        $membre=$session->get('user');
         return $this->render('produit/index.html.twig', [
             'produits' => $produitRepository->findAll(),
             'categories' => $categorieRepository->findAll(),
+            'user' => $membre
             
         ]);
         return $this->render('produit/afficher.html.twig', [
@@ -60,10 +62,13 @@ class ProduitController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_produit_show', methods: ['GET'])]
-    public function show(Produit $produit): Response
+    public function show(Produit $produit,Request $request): Response
     {
+        $session= $request->getSession();
+        $membre=$session->get('user');
         return $this->render('produit/show.html.twig', [
             'produit' => $produit,
+            'user' => $membre
         ]);
     }
 

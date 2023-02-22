@@ -35,7 +35,7 @@ class Technicien
 
    
 
-    #[ORM\OneToMany(mappedBy: 'technicien_id', targetEntity: Affectations::class,cascade:["remove"], orphanRemoval:true)]
+    #[ORM\OneToMany(mappedBy: 'technicien', targetEntity: Affectations::class,cascade:["remove"], orphanRemoval:true)]
     private Collection $affectations;
 
     public function __construct()
@@ -155,6 +155,6 @@ class Technicien
     
     public function __toString()
     {
-        return $this->nom.' '.$this->id;
+        return $this->nom;
     }
 }

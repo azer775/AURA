@@ -30,7 +30,7 @@ class Terrain
     #[ORM\OneToMany(mappedBy: 'id_terrain', targetEntity: Part::class,cascade:["remove"], orphanRemoval:true)]
     private Collection $parts;
 
-    #[ORM\OneToMany(mappedBy: 'terrain_id', targetEntity: Affectations::class,cascade:["remove"], orphanRemoval:true)]
+    #[ORM\OneToMany(mappedBy: 'terrain', targetEntity: Affectations::class,cascade:["remove"], orphanRemoval:true)]
     private Collection $affectations;
 
     #[ORM\ManyToOne(inversedBy: 'terrains')]
@@ -137,7 +137,7 @@ class Terrain
     {
         if (!$this->affectations->contains($affectation)) {
             $this->affectations->add($affectation);
-            $affectation->setTerrainId($this);
+            $affectation->setTerrain($this);
         }
 
         return $this;
@@ -147,8 +147,8 @@ class Terrain
     {
         if ($this->affectations->removeElement($affectation)) {
             // set the owning side to null (unless already changed)
-            if ($affectation->getTerrainId() === $this) {
-                $affectation->setTerrainId(null);
+            if ($affectation->getTerrain() === $this) {
+                $affectation->setTerrain(null);
             }
         }
 

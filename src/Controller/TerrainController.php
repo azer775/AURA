@@ -27,6 +27,8 @@ class TerrainController extends AbstractController
         $terrain = new Terrain();
         $form = $this->createForm(TerrainType::class, $terrain);
         $form->handleRequest($request);
+        $session= $request->getSession();
+        $membre=$session->get('user');
 
         if ($form->isSubmitted() && $form->isValid()) {
             $terrainRepository->save($terrain, true);
@@ -37,6 +39,7 @@ class TerrainController extends AbstractController
         return $this->renderForm('terrain/new.html.twig', [
             'terrain' => $terrain,
             'form' => $form,
+            'user' => $membre
         ]);
     }
 
@@ -53,6 +56,8 @@ class TerrainController extends AbstractController
     {
         $form = $this->createForm(TerrainType::class, $terrain);
         $form->handleRequest($request);
+        $session= $request->getSession();
+        $membre=$session->get('user');
 
         if ($form->isSubmitted() && $form->isValid()) {
             $terrainRepository->save($terrain, true);
@@ -63,6 +68,7 @@ class TerrainController extends AbstractController
         return $this->renderForm('terrain/edit.html.twig', [
             'terrain' => $terrain,
             'form' => $form,
+            'user' => $membre
         ]);
     }
 

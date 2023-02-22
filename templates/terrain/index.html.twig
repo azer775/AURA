@@ -11,6 +11,7 @@
                 <th>Id</th>
                 <th>Surface</th>
                 <th>Adresse</th>
+                <th>Membre</th>
                 <th>Potentiel</th>
                 <th>actions</th>
             </tr>
@@ -21,6 +22,7 @@
                 <td>{{ terrain.id }}</td>
                 <td>{{ terrain.surface }}</td>
                 <td>{{ terrain.adresse }}</td>
+                <td>{{ terrain.Membre }}</td>
                 <td>{{ terrain.potentiel }}</td>
                 <td>
                     <a href="{{ path('app_terrain_show', {'id': terrain.id}) }}">show</a>

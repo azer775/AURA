@@ -49,6 +49,16 @@ class AffectationsRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+    public function findByMembre($membreId)
+{
+    return $this->createQueryBuilder('a')
+        ->join('a.terrain', 't')
+        ->join('t.Membre', 'm')
+        ->andWhere('m.id = :membreId')
+        ->setParameter('membreId', $membreId)
+        ->getQuery()
+        ->getResult();
+}
 //    /**
 //     * @return Affectation[] Returns an array of Affectation objects
 //     */

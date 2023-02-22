@@ -21,10 +21,10 @@ class Affectations
     private ?\DateTimeInterface $date_fin = null;
 
     #[ORM\ManyToOne(inversedBy: 'affectations')]
-    private ?Technicien $technicien_id = null;
+    private ?Technicien $technicien = null;
 
     #[ORM\ManyToOne(inversedBy: 'affectations')]
-    private ?Terrain $terrain_id = null;
+    private ?Terrain $terrain = null;
 
     public function getId(): ?int
     {
@@ -55,26 +55,26 @@ class Affectations
         return $this;
     }
 
-    public function getTechnicienId(): ?Technicien
+    public function getTechnicien(): ?Technicien
     {
-        return $this->technicien_id;
+        return $this->technicien;
     }
 
-    public function setTechnicienId(?Technicien $technicien_id): self
+    public function setTechnicien(?Technicien $technicien): self
     {
-        $this->technicien_id = $technicien_id;
+        $this->technicien = $technicien;
 
         return $this;
     }
 
-    public function getTerrainId(): ?Terrain
+    public function getTerrain(): ?Terrain
     {
-        return $this->terrain_id;
+        return $this->terrain;
     }
 
-    public function setTerrainId(?Terrain $terrain_id): self
+    public function setTerrain(?Terrain $terrain): self
     {
-        $this->terrain_id = $terrain_id;
+        $this->terrain = $terrain;
 
         return $this;
     }

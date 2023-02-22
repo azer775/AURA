@@ -145,9 +145,24 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__left">
                             <ul>
-                                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-                                <li>Free Shipping for all Order of $99</li>
+                           {% if user is not defined %}
+                            {% if user is not   empty %}
+                                <li><i class="fa fa-envelope"></i> {{user.nom}}</li>
+                                {% endif %}
+                                {% endif %}
                             </ul>
+                           
+                            {% if user is    empty %}
+                                
+                            
+                            <ul> 
+                                
+                            
+                                <button type="" class="site-btn">Devenir membre</button>
+                                <button type="" class="site-btn">Devenir partenaire</button>
+                            </ul>
+                            
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6">
@@ -189,6 +204,7 @@
                             <li><a href="{{path ('app_produit_index')}}">Shop</a></li>
                             <li><a href="{{path ('app_post_index')}}">Blog</a></li>
                             <li><a href="{{path ('app_association_index')}}">Donations</a></li>
+                            <li><a href="{{path ('app_association_index')}}">Terrain</a></li>
                             <li><a href="contact.html">Contact</a></li>
                         </ul>
                     </nav>

@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+
 #[ORM\Entity(repositoryClass: MembreRepository::class)]
-class Membre implements UserInterface
+class Membre
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -76,10 +76,7 @@ class Membre implements UserInterface
     {
         return $this->id;
     }
-    public function getUserIdentifier(): ?int
-    {
-        return $this->id;
-    }
+
     public function getNom(): ?string
     {
         return $this->nom;
@@ -163,27 +160,7 @@ class Membre implements UserInterface
 
         return $this;
     }
-    public function getRoles()
-    {
-        return $this->role;
-    }
 
-    
-
-    public function getSalt()
-    {
-        return null;
-    }
-
-    public function getUsername()
-    {
-        return $this->nom;
-    }
-
-    public function eraseCredentials()
-    {
-        // do nothing
-    }
     /**
      * @return Collection<int, Don>
      */

@@ -14,10 +14,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class PostController extends AbstractController
 {
     #[Route('/', name: 'app_post_index', methods: ['GET'])]
-    public function index(PostRepository $postRepository): Response
+    public function index(PostRepository $postRepository,Request $request): Response
     {
+        $session= $request->getSession();
+        $membre=$session->get('user');
         return $this->render('post/index.html.twig', [
             'posts' => $postRepository->findAll(),
+            'user' => $membre
         ]);
         
     }
