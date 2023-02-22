@@ -23,7 +23,8 @@ class DonController extends AbstractController
 
     #[Route('/new', name: 'app_don_new', methods: ['GET', 'POST'])]
     public function new(Request $request, DonRepository $donRepository): Response
-    {
+    {   $session= $request->getSession();
+        $membre=$session->get('user');
         $don = new Don();
         $form = $this->createForm(DonType::class, $don);
         $form->handleRequest($request);
@@ -37,6 +38,7 @@ class DonController extends AbstractController
         return $this->renderForm('don/new.html.twig', [
             'don' => $don,
             'form' => $form,
+            'user' => $membre
         ]);
     }
 

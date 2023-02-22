@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MembreRepository::class)]
 class Membre
@@ -17,24 +19,34 @@ class Membre
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"nom est obligatoire")]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"prenom est obligatoire")]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Email()]
+    #[Assert\NotBlank(message:"email est obligatoire")]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"PASSWORD est obligatoire")]
+    #[SecurityAssert\UserPassword(
+        message: 'Wrong value for your current password',
+    )]
     private ?string $password = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateNais = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"TEL est obligatoire")]
     private ?string $tel = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"adresse est obligatoire")]
     private ?string $adresse = null;
 
     #[ORM\OneToMany(mappedBy: 'id_Membre', targetEntity: Don::class,cascade:["remove"], orphanRemoval:true)]
@@ -173,7 +185,7 @@ class Membre
     {
         if (!$this->dons->contains($don)) {
             $this->dons->add($don);
-            $don->setIdMembre($this);
+            $don->setMembre($this);
         }
 
         return $this;
@@ -183,8 +195,8 @@ class Membre
     {
         if ($this->dons->removeElement($don)) {
             // set the owning side to null (unless already changed)
-            if ($don->getIdMembre() === $this) {
-                $don->setIdMembre(null);
+            if ($don->getMembre() === $this) {
+                $don->setMembre(null);
             }
         }
 

@@ -27,7 +27,7 @@ class Association
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-   #[ORM\OneToMany(mappedBy: 'id_Assoc', targetEntity: Don::class)]
+   #[ORM\OneToMany(mappedBy: 'Association', targetEntity: Don::class)]
     private Collection $dons;
 
     public function __construct()
@@ -100,7 +100,7 @@ class Association
     {
         if (!$this->dons->contains($don)) {
             $this->dons->add($don);
-            $don->setIdAssoc($this);
+            $don->setAssociation($this);
         }
 
         return $this;
@@ -110,8 +110,8 @@ class Association
     {
         if ($this->dons->removeElement($don)) {
             // set the owning side to null (unless already changed)
-            if ($don->getIdAssoc() === $this) {
-                $don->setIdAssoc(null);
+            if ($don->getAssociation() === $this) {
+                $don->setAssociation(null);
             }
         }
 

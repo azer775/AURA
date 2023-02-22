@@ -21,10 +21,10 @@ class Don
     private ?\DateTimeInterface $date_Don = null;
 
     #[ORM\ManyToOne(inversedBy: 'dons')]
-    private ?Membre $id_Membre = null;
+    private ?Membre $Membre = null;
 
     #[ORM\ManyToOne(inversedBy: 'dons')]
-    private ?Association $id_Assoc = null;
+    private ?Association $Association = null;
 
     public function getId(): ?int
     {
@@ -55,26 +55,26 @@ class Don
         return $this;
     }
 
-    public function getIdMembre(): ?Membre
+    public function getMembre(): ?Membre
     {
-        return $this->id_Membre;
+        return $this->Membre;
     }
 
-    public function setIdMembre(?Membre $id_Membre): self
+    public function setMembre(?Membre $Membre): self
     {
-        $this->id_Membre = $id_Membre;
+        $this->Membre = $Membre;
 
         return $this;
     }
 
-    public function getIdAssoc(): ?Association
+    public function getAssociation(): ?Association
     {
-        return $this->id_Assoc;
+        return $this->Association;
     }
 
-    public function setIdAssoc(?Association $id_Assoc): self
+    public function setAssociation(?Association $Association): self
     {
-        $this->id_Assoc = $id_Assoc;
+        $this->Association = $Association;
 
         return $this;
     }

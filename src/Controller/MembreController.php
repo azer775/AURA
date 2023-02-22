@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Membre;
 use App\Form\MembreType;
 use App\Form\LoginType;
+use App\Form\LoginFType;
 use App\Repository\MembreRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,13 +41,38 @@ class MembreController extends AbstractController
            
                 if ($membre!=null) {
                     $session->set('user', $membre);
-                    return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+                    return $this->redirectToRoute('app_membre_index', [], Response::HTTP_SEE_OTHER);
                 } 
                 else {
                     $this->addFlash('error', 'Invalid credentials');
                 }
         }
         return $this->render('membre/login.html.twig', [
+            'forma' => $form->createView()
+        ]); 
+    }
+    #[Route('/loginf', name: 'app_membre_loginf')]
+    public function loginf(Request $request, MembreRepository $membreRepository): Response
+    {   
+        $form = $this->createForm(LoginFType::class);
+
+        $form->handleRequest($request);
+        $session= $request->getSession();
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $email = $form->get('email')->getData();
+            $password = $form->get('password')->getData();
+            $membre=$membreRepository->verif($email,$password);
+           
+                if ($membre!=null) {
+                    $session->set('user', $membre);
+                    return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+                } 
+                else {
+                    $this->addFlash('error', 'Invalid credentials');
+                }
+        }
+        return $this->render('membre/loginF.html.twig', [
             'forma' => $form->createView()
         ]); 
     }
@@ -108,6 +134,7 @@ class MembreController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $membre->setRole("Admin");
             $membreRepository->save($membre, true);
 
             return $this->redirectToRoute('app_membre_index', [], Response::HTTP_SEE_OTHER);
