@@ -3,7 +3,7 @@
 {% block title %}Produit{% endblock %}
 
 {% block body %}
-    <h1>Produit</h1>
+    
 
     <!-- Hero Section Begin -->
     <section class="hero hero-normal">
@@ -119,12 +119,11 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#" class="primary-btn">ADD TO CARD</a>
+                        <a href="{{ path('panier_ajouter', {'id': produit.id}) }}" class="primary-btn">ADD TO CARD</a>
                         <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
                         <ul>
                             <li><b>Availability</b> {% if produit.nbrProds > 0 %} <span>In Stock</span>  {% else %} <span>out off Stock</span>{% endif %}</li> 
-                            <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
-                            <li><b>Weight</b> <span>0.5 kg</span></li>
+                            <li><b>Categorie</b> <span>{{produit.categorie}} </span></li>
                             <li><b>Share on</b>
                                 <div class="share">
                                     <a href="#"><i class="fa fa-facebook"></i></a>

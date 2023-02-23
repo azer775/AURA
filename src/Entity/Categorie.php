@@ -23,6 +23,17 @@ class Categorie
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Produit::class,cascade:["remove"], orphanRemoval:true)]
     private Collection $produits;
 
+    #[ORM\Column(length: 1000, nullable: true)]
+    #[Assert\Url()]
+    #[Assert\NotBlank(message:"Image est obligatoire")]
+    private ?string $image = null;
+
+    
+    #[Assert\NotBlank(message:"champ obligatoire")]
+    #[Assert\Positive(message:"nombre de produit doit etre Positive")]
+    #[ORM\Column(nullable: true)]
+    private ?int $nbrproduit = null;
+
     public function __construct()
     {
         $this->produits = new ArrayCollection();
@@ -77,5 +88,29 @@ class Categorie
     public function __toString()
     {
         return $this->nom.' '.$this->id;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getNbrproduit(): ?int
+    {
+        return $this->nbrproduit;
+    }
+
+    public function setNbrproduit(?int $nbrproduit): self
+    {
+        $this->nbrproduit = $nbrproduit;
+
+        return $this;
     }
 }

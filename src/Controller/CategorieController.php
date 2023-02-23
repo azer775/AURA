@@ -30,9 +30,15 @@ class CategorieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $nom=$form->get('nom')->getData();
+            if($categorieRepository->findOneBy(['nom' => $nom])==null){
             $categorieRepository->save($categorie, true);
 
             return $this->redirectToRoute('app_categorie_index', [], Response::HTTP_SEE_OTHER);
+        }
+            else {
+                $this->addFlash('error', 'Invalid credentials');
+            }
         }
 
         return $this->renderForm('categorie/new.html.twig', [

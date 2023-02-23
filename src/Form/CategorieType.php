@@ -15,6 +15,12 @@ class CategorieType extends AbstractType
             ->add('nom', TextType::class, [
                 'attr' => ['class' => 'form-control']
             ])
+            ->add('image', TextType::class, [
+                'attr' => ['class' => 'form-control']
+            ])
+            ->add('nbrproduit', TextType::class, [
+                'attr' => ['class' => 'form-control']
+            ])
         ;
     }
 
