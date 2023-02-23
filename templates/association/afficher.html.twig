@@ -28,6 +28,7 @@
 						<td>
 							<a href="{{ path('app_association_show', {'id': association.id}) }}">show</a>
 							<a href="{{ path('app_association_edit', {'id': association.id}) }}">edit</a>
+							{{ include('association/_delete_form.html.twig') }}
 						</td>
 					</tr>
 				{% else %}

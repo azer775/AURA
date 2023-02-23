@@ -3,9 +3,16 @@
 namespace App\Form;
 
 use App\Entity\Don;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Positive;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+
 
 class DonType extends AbstractType
 {
@@ -13,11 +20,15 @@ class DonType extends AbstractType
     {
         $builder
             ->add('montant')
-            ->add('date_Don')
+            ->add('dateDon', DateType::class, [
+                'widget' => 'single_text',
+                'label' => 'Date',
+                'attr' => ['readonly' => true],
+            ])
             ->add('carteCredit')
             ->add('message')
-            ->add('Membre')
-            ->add('Association')
+            // ->add('Membre')
+            // ->add('Association')
         ;
     }
 
