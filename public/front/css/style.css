@@ -84,7 +84,7 @@ p {
 }
 
 img {
-	max-width: 50%;
+	max-width: 100%;
 	
 }
 
@@ -1922,7 +1922,8 @@ ol {
 .shoping__cart__table table tbody tr td.shoping__cart__item img {
 	display: inline-block;
 	margin-right: 25px;
-	width: 50
+	width: 50;
+	max-width: 20;
 }
 
 .shoping__cart__table table tbody tr td.shoping__cart__item h5 {
