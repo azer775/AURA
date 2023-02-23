@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\DonRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: DonRepository::class)]
 class Don
@@ -13,16 +15,26 @@ class Don
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
+    #[Assert\NotBlank]
+    #[Assert\Type('float')]
+    #[Assert\Positive]
     #[ORM\Column]
     private ?float $montant = null;
-
+    #[Assert\NotBlank]
+    #[Assert\Date]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_Don = null;
-
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 16, max: 16)]
+    #[ORM\Column(nullable: false)]
+    private ?string $carteCredit = null;
+    #[Assert\NotBlank]
+    #[ORM\Column(nullable: true)]
+    private ?string $message = null;
+    #[Assert\Valid]
     #[ORM\ManyToOne(inversedBy: 'dons')]
     private ?Membre $Membre = null;
-
+    #[Assert\Valid]
     #[ORM\ManyToOne(inversedBy: 'dons')]
     private ?Association $Association = null;
 
@@ -75,6 +87,29 @@ class Don
     public function setAssociation(?Association $Association): self
     {
         $this->Association = $Association;
+
+        return $this;
+    }
+    public function getCarteCredit(): ?string
+    {
+        return $this->carteCredit;
+    }
+
+    public function setCarteCredit(?string $carteCredit): self
+    {
+        $this->carteCredit = $carteCredit;
+
+        return $this;
+    }
+
+    public function getMessage(): ?string
+    {
+        return $this->message;
+    }
+
+    public function setMessage(?string $message): self
+    {
+        $this->message = $message;
 
         return $this;
     }
