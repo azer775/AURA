@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Thanks for your donation!
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1>Thanks for your donation!</h1>
+		<p>Your generosity is greatly appreciated.</p>
+	</div>
+
+	<a href="{{ path('app_don_index') }}">back to list</a>
+{% endblock %}

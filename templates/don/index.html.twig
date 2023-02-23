@@ -1,37 +1,39 @@
 {% extends 'base1.html.twig' %}
 
-{% block title %}Don index{% endblock %}
+{% block title %}Donation
+{% endblock %}
 
 {% block body %}
-    <h1>Don index</h1>
+	<h1>
+		<center>Donations</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Montant</th>
-                <th>Date_Don</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for don in dons %}
-            <tr>
-                <td>{{ don.id }}</td>
-                <td>{{ don.montant }}</td>
-                <td>{{ don.dateDon ? don.dateDon|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_don_show', {'id': don.id}) }}">show</a>
-                    <a href="{{ path('app_don_edit', {'id': don.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Montant</th>
+					<th>Date</th>
+					<th>actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for don in dons %}
+					<tr>
+						<td>{{ don.id }}</td>
+						<td>{{ don.montant }}</td>
+						<td>{{ don.dateDon ? don.dateDon|date('Y-m-d') : '' }}</td>
+						<td>
+							<a href="{{ path('app_don_show', {'id': don.id}) }}">show</a>
+							<a href="{{ path('app_don_edit', {'id': don.id}) }}">edit</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="4">no records found</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 
-    <a href="{{ path('app_don_new') }}">Create new</a>
-{% endblock %}
+		<a href="{{ path('app_don_new') }}">Create new</a>
+	{% endblock %}

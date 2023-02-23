@@ -23,8 +23,9 @@ class DonController extends AbstractController
 
     #[Route('/new', name: 'app_don_new', methods: ['GET', 'POST'])]
     public function new(Request $request, DonRepository $donRepository): Response
-    {   $session= $request->getSession();
-        $membre=$session->get('user');
+    {
+        $session = $request->getSession();
+        $membre = $session->get('user');
         $don = new Don();
         $form = $this->createForm(DonType::class, $don);
         $form->handleRequest($request);
@@ -43,16 +44,21 @@ class DonController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_don_show', methods: ['GET'])]
-    public function show(Don $don): Response
+    public function show(Request $request, Don $don): Response
     {
+        $session = $request->getSession();
+        $membre = $session->get('user');
         return $this->render('don/show.html.twig', [
             'don' => $don,
+            'user' => $membre
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_don_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Don $don, DonRepository $donRepository): Response
     {
+        $session = $request->getSession();
+        $membre = $session->get('user');
         $form = $this->createForm(DonType::class, $don);
         $form->handleRequest($request);
 
@@ -65,13 +71,14 @@ class DonController extends AbstractController
         return $this->renderForm('don/edit.html.twig', [
             'don' => $don,
             'form' => $form,
+            'user' => $membre
         ]);
     }
 
     #[Route('/{id}', name: 'app_don_delete', methods: ['POST'])]
     public function delete(Request $request, Don $don, DonRepository $donRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$don->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $don->getId(), $request->request->get('_token'))) {
             $donRepository->remove($don, true);
         }
 
