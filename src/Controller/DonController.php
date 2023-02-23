@@ -33,7 +33,7 @@ class DonController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $donRepository->save($don, true);
 
-            return $this->redirectToRoute('app_don_th', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_don_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('don/new.html.twig', [
