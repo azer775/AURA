@@ -24,13 +24,10 @@ class AssociationController extends AbstractController
         ]);
     }
     #[Route('/afficher', name: 'app_association_afficher', methods: ['GET'])]
-    public function afficher(Request $request, AssociationRepository $associationRepository): Response
+    public function afficher(AssociationRepository $associationRepository): Response
     {
-        $session = $request->getSession();
-        $membre = $session->get('user');
         return $this->render('association/afficher.html.twig', [
             'associations' => $associationRepository->findAll(),
-            'user' => $membre
         ]);
     }
     #[Route('/new', name: 'app_association_new', methods: ['GET', 'POST'])]

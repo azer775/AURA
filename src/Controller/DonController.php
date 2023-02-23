@@ -21,6 +21,7 @@ class DonController extends AbstractController
         ]);
     }
 
+
     #[Route('/new', name: 'app_don_new', methods: ['GET', 'POST'])]
     public function new(Request $request, DonRepository $donRepository): Response
     {
@@ -33,12 +34,21 @@ class DonController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $donRepository->save($don, true);
 
-            return $this->redirectToRoute('app_don_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_don_thanks', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('don/new.html.twig', [
             'don' => $don,
             'form' => $form,
+            'user' => $membre
+        ]);
+    }
+    #[Route('/thanks', name: 'app_don_thanks')]
+    public function thanks(Request $request): Response
+    {
+        $session = $request->getSession();
+        $membre = $session->get('user');
+        return $this->render('don/thanks.html.twig', [
             'user' => $membre
         ]);
     }
