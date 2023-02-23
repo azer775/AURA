@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\DonRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints as Assert;
 use DateTimeInterface;
 use DateTimeImmutable;
@@ -18,26 +17,29 @@ class Don
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Assert\NotBlank]
     #[Assert\Type('float')]
     #[Assert\Positive]
     #[ORM\Column(type: 'float')]
-    #[Assert\NotBlank(message: 'Please provide a montant.')]
+    #[Assert\NotBlank(message: 'Veuillez fournir un montant.')]
     private ?float $montant = null;
 
-    #[Assert\NotBlank]
     #[ORM\Column(type: 'datetime')]
     private ?DateTimeInterface $date_Don = null;
 
-    #[Assert\NotBlank]
-    #[Assert\Length(min: 16, max: 16)]
+    #[Assert\Regex(
+        pattern: '/^[0-9]+$/',
+        message: 'La carte de crédit ne doit contenir que des chiffres.'
+    )]
+    #[Assert\Length(
+        min: 16,
+        max: 16,
+        exactMessage: 'La carte de crédit doit avoir une longueur de 16 chiffres.'
+    )]
     #[ORM\Column(nullable: false)]
-    #[Assert\NotBlank(message: 'Please provide a carteCredit.')]
+    #[Assert\NotBlank(message: 'Veuillez fournir une Carte Credit.')]
     private ?string $carteCredit = null;
 
-    #[Assert\NotBlank]
     #[ORM\Column(nullable: true)]
-    #[Assert\NotBlank(message: 'Please provide a message.')]
     private ?string $message = null;
 
     #[Assert\Valid]
