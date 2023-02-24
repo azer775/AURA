@@ -8,7 +8,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                
                 <th>Nom_Prod</th>
                 <th>Description</th>
                 <th>Image</th>
@@ -20,7 +20,7 @@
         <tbody>
         {% for produit in produits %}
             <tr>
-                <td>{{ produit.id }}</td>
+                
                 <td>{{ produit.nomProd }}</td>
                 <td>{{ produit.description }}</td>
                 <td><img src="{{asset(produit.image)}}" height= 50></td>

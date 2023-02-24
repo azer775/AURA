@@ -33,9 +33,9 @@ class Membre
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:"PASSWORD est obligatoire")]
-    #[SecurityAssert\UserPassword(
+    /*#[SecurityAssert\UserPassword(
         message: 'Wrong value for your current password',
-    )]
+    )]*/
     private ?string $password = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]

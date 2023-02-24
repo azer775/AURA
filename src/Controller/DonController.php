@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Don;
+use App\Entity\Association;
 use App\Entity\Membre;
 use App\Form\DonType;
 use App\Repository\DonRepository;
+use App\Repository\MembreRepository;
+use App\Repository\AssociationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,14 +25,16 @@ class DonController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/new', name: 'app_don_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, DonRepository $donRepository): Response
+    #[Route('/new/{id}', name: 'app_don_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, DonRepository $donRepository, Association $Association, MembreRepository $membreRepository ): Response
     {  
         $session= $request->getSession();
         $membre=new Membre();
         $membre=$session->get('user');
+        $membre=$membreRepository->find($membre->getId());
         $don = new Don();
         $don->setMembre($membre);
+        $don->setAssociation($Association);
         $form = $this->createForm(DonType::class, $don);
         $form->handleRequest($request);
 
