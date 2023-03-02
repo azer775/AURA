@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
@@ -15,33 +16,40 @@ class Produit
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("produit")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:"champ obligatoire")]
+    #[Groups("produit")]
     private ?string $nom_Prod = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message:"champ obligatoire")]
-    #[Assert\Length(min:20,minMessage:"Veuillez écrire au moins 20 caractéres")]
+    //#[Assert\Length(min:20,minMessage:"Veuillez écrire au moins 20 caractéres")]
+    #[Groups("produit")]
     private ?string $description = null;
 
     #[ORM\Column(length: 1000)]
-    #[Assert\Url()]
+    //#[Assert\Url()]
     #[Assert\NotBlank(message:"Image est obligatoire")]
+    #[Groups("produit")]
     private ?string $image = null;
 
     #[ORM\Column]
     #[Assert\Positive(message:"prix doit etre Positive")]
     #[Assert\NotBlank(message:"champ obligatoire")]
+    #[Groups("produit")]
     private ?float $prix = null;
 
     #[ORM\Column]
     #[Assert\NotBlank(message:"champ obligatoire")]
     #[Assert\Positive(message:"nombre de produit doit etre Positive")]
+    #[Groups("produit")]
     private ?int $nbr_Prods = null;
 
     #[ORM\ManyToOne(inversedBy: 'produits')]
+    #[Groups("produit")]
     private ?Categorie $categorie = null;
 
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Achat::class,cascade:["remove"], orphanRemoval:true)]

@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Categorie;
 use App\Form\CategorieType;
 use App\Repository\CategorieRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +23,14 @@ class CategorieController extends AbstractController
         ]);
         
     }
-
+    #[Route('/add', name: 'app_categorie_add', methods: ['POST'])]
+    public function add(SerializerInterface $serializerInterface,Request $request,EntityManagerInterface $em)
+    {$content=$request->getContent();
+        $data=$serializerInterface->deserialize($content,Categorie::class,'json');
+        $em->persist($data);
+        $em->flush();
+        return new Response("success");
+    }
     #[Route('/new', name: 'app_categorie_new', methods: ['GET', 'POST'])]
     public function new(Request $request, CategorieRepository $categorieRepository): Response
     {

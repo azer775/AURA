@@ -6,9 +6,13 @@ use App\Entity\Produit;
 use App\Form\ProduitType;
 use App\Repository\ProduitRepository;
 use App\Repository\CategorieRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+//use Symfony\Component\Messenger\Transport\Serialization\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/produit')]
@@ -41,7 +45,22 @@ class ProduitController extends AbstractController
         ]);
         
     }
-
+    #[Route('/list', name: 'app_produit_list', methods: ['GET'])]
+    public function list(ProduitRepository $repo,SerializerInterface $serializerInterface)
+    {$produits=$repo->findAll();
+        $json=$serializerInterface->serialize($produits,'json',['groups'=>'produit']);
+        dump($json);
+       die; 
+        
+    }
+    #[Route('/addp', name: 'app_produit_add')]
+    public function add(ProduitRepository $repo,SerializerInterface $serializerInterface,Request $request,EntityManagerInterface $em)
+    {$content=$request->getContent();
+        $data=$serializerInterface->deserialize($content,Produit::class,'json');
+        $em->persist($data);
+        $em->flush();
+        return new Response("success");
+    }
     #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ProduitRepository $produitRepository): Response
     {

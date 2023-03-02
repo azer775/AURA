@@ -15,9 +15,7 @@ class FactureType extends AbstractType
             ->add('montant', TextType::class, [
                 'attr' => ['class' => 'form-control']
             ])
-            ->add('date', TextType::class, [
-                'attr' => ['class' => 'form-control']
-            ])
+            ->add('date')
             ->add('membre')
         ;
     }

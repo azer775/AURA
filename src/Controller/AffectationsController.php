@@ -28,6 +28,7 @@ class AffectationsController extends AbstractController
 
         return $this->render('affectations/afficher.html.twig', [
             'affectations' => $affectationsRepository->findByMembre($membre->getId()),
+            'user' => $membre
         ]);
     }
     #[Route('/new', name: 'app_affectations_new', methods: ['GET', 'POST'])]
