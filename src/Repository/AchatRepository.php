@@ -38,7 +38,20 @@ class AchatRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function getNombreAchatsPourCategorie($categorieId)
+{
+    $query = $this->createQueryBuilder('a')
+        ->select('COUNT(a.id) AS nombre_achats')
+        ->join('a.produit', 'p')
+        ->join('p.categorie', 'c')
+        ->where('c.id = :categorieId')
+        ->setParameter('categorieId', $categorieId)
+        ->getQuery();
 
+    $resultat = $query->getSingleScalarResult();
+
+    return $resultat;
+}
 //    /**
 //     * @return Achat[] Returns an array of Achat objects
 //     */

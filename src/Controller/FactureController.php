@@ -77,7 +77,7 @@ class FactureController extends AbstractController
                 */
             $mailer->send($email);
 
-            return $this->redirectToRoute('app_facture_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_achat_ajouter', [], Response::HTTP_SEE_OTHER);
         
 
         
